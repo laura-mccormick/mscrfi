@@ -130,7 +130,7 @@ alertTool.controller('alertsCtrl', function($scope, $http){
 
 alertTool.controller('conversationCtrl', function($scope, $http, Scopes){
 
-    $scope.hasRfi=true;
+
 
     window.onload = function(){
         filterByAlertId();
@@ -139,15 +139,11 @@ alertTool.controller('conversationCtrl', function($scope, $http, Scopes){
 // Dummy data from URL
  $http.get("http://localhost:8080/rfi/fullListDummy").then(function(response) {
         $scope.messages = response.data;
-        if messages.length < 1 {
-            hasRfi = false;
-        }
-    }).finally(function(messages){
-
+ }).finally(function(messages){
     $scope.filtMessages = $scope.messages.filter(function (message){
             return message.alertId===Scopes.get('conversationRoute').alertId;
-        })
     });
+ });
 
 //// Actual data from DB
 //   $http.get("/rfi/fullListActual").then(function(response) {
@@ -166,6 +162,7 @@ alertTool.controller('conversationCtrl', function($scope, $http, Scopes){
 //    $scope.filtMessages = $scope.messages.filter(function (message){
 //        return message.alertId===Scopes.get('conversationRoute').alertId;
 //    });
+
 
     $scope.selId = -1;
     $scope.selMessage = function (message, id){

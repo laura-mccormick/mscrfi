@@ -14,12 +14,12 @@
 
     <p></p>
 
-    <div ngIf="!hasRfi">There are currently no conversations relating to this alert.</div>
+    <div ng-show="filtMessages.length<1">There are currently no conversations relating to this alert.</div>
 
-    <div ngIf="hasRfi">
+    <div ng-show="filtMessages.length>0">
         <table>
             <thead>
-            <th ng-click="orderByMe('messageId'))">Message ID</th>
+            <th ng-click="orderByMe('messageId')">Message ID</th>
             <th>Message</th>
             <th ng-click="orderByMe('timestamp')">Timestamp</th>
             <th ng-click="orderByMe('sender')">Sender</th>

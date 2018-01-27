@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</head>
+<h1>First Attempt Alerts</h1>
+
+
+<p id="demo"></p>
+
+<style>
+div.container {
+    width: 100%;
+    border: 1px solid gray;
+}
+
+header, footer {
+    padding: 0.5em;
+    color: white;
+    background-color: green;
+    clear: left;
+    text-align: center;
+}
+
+nav {
+    float: left;
+    max-width: 160px;
+    margin: 0;
+    padding: 1em;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul a {
+    text-decoration: none;
+}
+
+article {
+    margin-left: 170px;
+    border-left: 1px solid gray;
+    padding: 1em;
+    overflow: hidden;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+</style>
+
+
+<header>
+    <h1>Alerts</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="http://localhost:8080/">Main Menu</a></li>
+        <li><a href="http://localhost:8080/email">Email</a></li>
+        <li><a href="http://localhost:8080/cheekymonkey">RFI</a></li>
+        <li><a href="http://localhost:8080/cheekymonkey">Global Address List</a></li>
+        <li><a href="https://www.linkedin.com/in/laura-mccormick-0ba742125/detail/photo/">World's Worst Programmer</a>
+        </li>
+    </ul>
+
+</nav>
+
+<article>
+
+    <form action="/action_page.php">
+
+        <button type="button"
+                onclick="myfunction()"></button>
+        Generate Alert List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <br><br>
+
+        Search by: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="SearchBy" value="<Enter Field>"
+                                                               onfocus="if(this.value == '<Enter Field>') {this.value=''}"
+                                                               onblur="if(this.value == ''){this.value ='<Enter Field>'}">
+        <br>
+
+
+        Search for:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="SearchFor" value="<Enter Value>"
+                                                               onfocus="if(this.value == '<Enter Value>') {this.value=''}"
+                                                               onblur="if(this.value == ''){this.value ='<Enter Value>'}">
+        <br>
+        <div ng-app="alertApp" ng-controller="alertCtrl">
+            <table style="width:400px">
+                <col width="80">
+                <col width="80">
+                <col width="80">
+                <tr>
+                    <th>ID</th>
+                    <th>hasRFI</th>
+                    <th>Description</th>
+                </tr>
+                <tr ng-repeat="x in myData">
+                    <td width="15%"> {{ x.id }}</td>
+                    <td width="15%"> {{ x.hasRfi }}</td>
+                    <td width="70%"> {{ x.desc }}</td>
+                </tr>
+            </table>
+        </div>
+        <script>
+var app = angular.module('alertApp', []);
+app.controller('alertCtrl', function($scope, $http) {
+  $http.get("refreshtest").then(function (response) {
+      $scope.myData = response.data;
+  });
+});
+
+
+
+        </script>
+    </form>
+    <p></p>
+    <button type="button"
+            onclick="document.getElementById('demo').innerHTML = Date()">
+        Search
+    </button>
+
+    <button type="button"
+            onclick="document.getElementById('demo').innerHTML = Date()">
+        Clear
+    </button>
+</article>
+
+<footer>Jake Toan's Sweet Work</footer>
+
+</body>
+</html>

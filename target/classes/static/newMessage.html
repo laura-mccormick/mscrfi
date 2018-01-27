@@ -1,0 +1,98 @@
+<div  ng-controller="newMessageCtrl">
+
+        <br>
+    <body>
+        <div class="messageView">
+
+                    <h3>New Message for Alert: {{alertId}} </h3>
+
+                        <!--   This whole div functions as a form that whenever the submit button
+                               at the bottom is clicked, will render the parameters from the http
+                               servlet request.
+
+                               Need to find a way to pass the {{alertId}} back through in a similar manner.
+                               At the minute it's existing only within the session? -->
+                        <form action="sent/">
+
+                            <b>To: </b>   <input type="text" ng-model="recipient1" id="sender1" name="sender1"/><br><br>
+
+                            <b>Cc: </b>   <input type="text" ng-model="recipient2" id="sender2" name="sender2"/><br><br>
+
+                            <b>Subject: </b>  <input type="text" ng-model="subject" size="70" id="subject" name="subject"/><br><br>
+
+                        <!--- Attach File Code --->
+
+                            <div class="row">
+                                <label for="fileToUpload">Attach File</label>
+                                <input type="file" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" /> <br><br><br>
+                            </div>
+
+                            <div ng-show="files.length">
+                                <div ng-repeat="file in files.slice(0)">
+                                    <span>{{file.webkitRelativePath || file.name}}</span>
+                                    (<span ng-switch="file.size > 1024*1024">
+                            <span ng-switch-when="true">{{file.size / 1024 / 1024 | number:2}} MB</span>
+                            <span ng-switch-default>{{file.size / 1024 | number:2}} kB</span>
+                        </span>)
+                                </div>
+                                <input type="button" ng-click="uploadFile()" value="Upload" />
+                                <div ng-show="progressVisible">
+                                    <div class="percent">{{progress}}%</div>
+                                    <div class="progress-bar">
+                                        <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <textarea class="messageBody" type="text" ng-model="message body" id="messageBodyId" cols=""30 rows="30" name="messageBody"></textarea><br><br><br>
+
+
+
+
+                    <div>
+                    <input class="saveButton" type="button" onclick="alert('Message Saved as Draft')" value="Save">
+                    <input class="sendButton" type="submit" value="Send" >
+                    </div>
+                        </form>
+        </div>
+
+        <div class="templateView">
+            <h3>Templates </h3>
+
+            <div>
+                <b>Search for Template: &nbsp; </b>
+                <div class="searchBarInput ">
+                    <input class="searchBarInput" type="text" ng-model="term" id="searcher" /><br>
+                </div>
+            </div>
+            <br><br><br>
+            <div class="templateSidebar">
+                <table class="templateSidebar">
+                    <thead>
+                    <th></th>
+                    <th>Template Title</th>
+                    <th>Questions</th>
+                    <th></th>
+                    </thead>
+                    <tbody ng-repeat="template in templates | filter:term">
+                    <tr>
+                        <td><input type="checkbox" id="templateCheckbox">
+                        </td>
+                        <td>{{template.templateTitle}}</td>
+
+                        <td class="ellipsis" id="templateFieldsId">{{template.questions}}</td>
+
+                        <td>
+                            <button ng-if="template.expanded" ng-click="template.expanded = false">-</button>
+                            <button ng-if="!template.expanded" ng-click="template.expanded = true">+</button>
+                        </td>
+                    </tr>
+                    <tr ng-if="template.expanded" ng-repeat-end="">
+                        <td colspan="3">{{template.questions}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</div>

@@ -1,0 +1,43 @@
+<div  ng-controller="templatesCtrl">
+
+
+    <body>
+    <div class="storedTempMain"> <button class="createNew" value="Create New Template"> <a href="#/createTemplate">Create New Template></a></button>
+        <h4> Stored Templates </h4>
+        <div>
+            <b>Search for Template: &nbsp; </b>
+            <div class="searchBarInput ">
+                <input class="searchBarInput" type="text" ng-model="term" id="searcher" /><br>
+            </div>
+        </div>
+        <br><br><br>
+
+        <div class="templateTable">
+
+            <table class="templateTable">
+                <thead>
+                <th>Template Title</th>
+                <th>Questions</th>
+                <th></th>
+                </thead>
+                <tbody ng-repeat="template in templates | filter:term" ng-cloak>
+                <tr>
+                    <td>{{template.templateTitle}}</td>
+                    <td class="ellipsis" >{{template.questions}}</td>
+                    <td>
+                        <button ng-if="template.expanded" ng-click="template.expanded = false">-</button>
+                        <button ng-if="!template.expanded" ng-click="template.expanded = true">+</button>
+                    </td>
+                </tr>
+                <tr ng-if="template.expanded" ng-repeat-end="">
+                    <td colspan="3">{{template.questions}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <br> <br> <Br>
+
+        </div>
+    </div>
+
+    </body>
+</div>

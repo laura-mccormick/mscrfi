@@ -1,0 +1,31 @@
+<div  ng-controller="alertsCtrl">
+
+    <script src="http://localhost:8080/alert/alert.js"></script>
+    <div>
+        <b>Search for Alert: &nbsp; </b>
+        <div class="searchBarInput ">
+            <input class="searchBarInput" type="text" ng-model="term" id="searcher" /><br>
+        </div>
+    </div>
+
+    <div><p></p><h1>Current Alerts</h1></div>
+
+    <nav><a id="viewRfiHref" class="greyOut">View RFI</a>   <a id="newRfiHref" class="greyOut">New RFI</a></nav>
+    <div ng-cloak>
+        <p></p>
+        <table>
+            <thead>
+            <th>ID</th>
+            <th>Alert Description</th>
+            <th>Has RFI?</th>
+            </thead>
+            <tbody ng-repeat="alert in alerts | filter:term" ng-cloak ng-switch on="isSelAlert(alert)" ng-click="selAlert(alert,$index)">
+            <tr ng-class="{selected: selId==$index}">
+                <td>{{alert.id}}</td>
+                <td>{{alert.desc}}</td>
+                <td>{{alert.hasRfi}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

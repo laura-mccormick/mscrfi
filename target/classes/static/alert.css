@@ -1,0 +1,300 @@
+h1 {
+  font-size: 1.5em;
+  color: black;
+  margin-bottom: 0;
+  font-family: Arial;
+}
+h2 {
+  font-size: 1em;
+  margin-top: 0;
+  padding-top: 0;
+}
+h3 {
+  font-size: 1em;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+table {
+  width: 90%;
+}
+table, td {
+  border-collapse: collapse;
+  padding: 15px;
+}
+th {
+  background-color: #90CAF9;
+  padding: 15px;
+  text-align: left;
+}
+tr {
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+nav a{
+    display: inline-block;
+}
+.selected {
+  background-color: #bfbfbf; !important;
+}
+.enable {
+  display: inline-block;
+  font-family: Arial;
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  background-color: #f1f1f1;
+  border-radius: 4px;
+}
+.enable:visited, .enable:link {
+  color: #000000;
+}
+.enable:hover {
+  color: #000000;
+  background-color: #90CAF9;
+
+}
+.enable.active {
+  color: #039be5;
+
+}
+nav b {
+  font-family: Arial;
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #f1f1f1;
+  border-radius: 4px;
+}
+
+body{
+  font-family: Arial;
+}
+
+.greyOut {
+    color: #000000;
+    background-color: #f1f1f1;
+    opacity:0.6;
+    display: inline-block;
+    font-family: Arial;
+    padding: 5px 10px;
+    text-decoration: none;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+/*Search Bar CSS*/
+
+    div.searchBarInput {
+    display: inline-block;
+    width: 50%;
+
+    }
+/* Menu Nav Bar */
+ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333333;
+        }
+
+        li {
+            list-style-type: none;
+            float: left;
+            background-color: #90CAF9
+
+        }
+
+        li a, .dropbtn {
+            display: inline-block;
+            color: black;
+            background-color: #90CAF9
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1em;
+
+        }
+
+        li a:hover, .dropdown:hover .dropbtn {
+            background-color: #90CAF9;
+        }
+
+        li.dropdown {
+            display: inline-block;
+           background-color: #90CAF9
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #C0E1FD ;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {background-color: #}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+}
+
+/* New Message Screen Specific CSS */
+
+
+
+           div.MenuBar {
+           width: 1000px;
+           }
+
+
+            div.templateView {
+
+            display: inline-block;
+            float: right;
+            width: 40%;
+            height: 700px;
+            padding: 25px;
+            box-sizing: border-box;
+            background-color: #CCC7B9;
+            border-left-style: solid;
+            border-color: black;
+            vertical-align: top;
+            }
+
+            .templateSidebar {
+             overflow-y: scroll;
+             overflow-x: scroll;
+             box-sizing: border-box;
+             height: 500px;
+             width: 100%;
+             }
+
+             .ellipsis {
+             max-width: 60px;
+             text-overflow: ellipsis;
+             overflow: hidden;
+             white-space: nowrap;
+             }
+
+            div.messageView {
+
+            display: inline-block;
+            float: left;
+            vertical-align: top;
+            width: 45%;
+            height: 700px;
+            padding: 25px;
+            box-sizing: border-box;
+            background-color: #CCC7B9;
+            }
+
+
+           input {
+            width: 90%;
+            float: right;
+            }
+
+            .messageBody {
+            width: 100%;
+            height: 350px;
+            }
+
+            .saveButton {
+            width: 100px;
+            float: right;
+            }
+            .sendButton {
+            width: 100px;
+            float: right;
+            }
+
+ /* Stored Templates Screen - CSS */
+            div.storedTempMain {
+
+             float: left;
+             width: 50%;
+             height: 800px;
+             padding: 25px;
+             box-sizing: border-box;
+             background-color: #CCC7B9;
+             vertical-align: top;
+
+             }
+
+            .createNew {
+             display: inline-block;
+             width: 25%;
+             float: right;
+             vertical-align: top;
+             border-radius: 4px;
+             padding: 10px 24px;
+
+             }
+             div.templateTable {
+             overflow-y: scroll;
+             box-sizing: border-box;
+             height: 600px;
+             width: 100%;
+
+             }
+
+             .ellipsis {
+             max-width: 600px;
+             text-overflow: ellipsis;
+             overflow: hidden;
+
+             white-space: nowrap;
+             }
+
+             div.CreateNewTemplateMain {
+
+             float: left;
+             width: 45%;
+             height: 800px;
+             padding: 25px;
+             box-sizing: border-box;
+             background-color: #CCC7B9;
+             vertical-align: top;
+             }
+
+             .templateTitle {
+             width: 75%;
+             padding: 5px;
+             }
+
+             .templateMainBody {
+             float: right;
+             width: 75%;
+             margin-bottom: 10px;
+             padding: 5px;
+
+             overflow-y: scroll;
+             }
+
+             .createTemplate {
+
+             width: 33%;
+             float: right;
+             vertical-align: bottom;
+
+             }
+
+            .addFieldBtn {
+            float: left;
+            width: 10%;
+            vertical-align: bottom;}
+
+
+

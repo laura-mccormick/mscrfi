@@ -1,0 +1,41 @@
+<div ng-controller="conversationCtrl">
+
+
+    <div>
+        <b>Search for Message: &nbsp; </b>
+        <div class="searchBarInput ">
+            <input class="searchBarInput" type="text" ng-model="term" id="searcher"/><br>
+        </div>
+    </div>
+
+    <div><p></p>
+        <h1>Messages for Alert: {{alertId}}</h1>
+        <nav><a id="viewMessageHref" class="greyOut">View Message</a></nav></div>
+
+    <p></p>
+
+    <div ngIf="!hasRfi">There are currently no conversations relating to this alert.</div>
+
+    <div ngIf="hasRfi">
+        <table>
+            <thead>
+            <th ng-click="orderByMe('messageId'))">Message ID</th>
+            <th>Message</th>
+            <th ng-click="orderByMe('timestamp')">Timestamp</th>
+            <th ng-click="orderByMe('sender')">Sender</th>
+            <th ng-click="orderByMe('recipient')">Recipient</th>
+            </thead>
+
+            <tbody ng-repeat="message in filtMessages | orderBy:myOrderBy | filter:term" ng-cloak ng-switch
+            on="isSelMessage(message)" ng-click="selMessage(message,$index)">
+            <tr ng-class="{selected: selId==$index}">
+                <td>{{message.messageId | uppercase}}</td>
+                <td>{{message.body}}</td>
+                <td>{{message.timestamp}}</td>
+                <td>{{message.sender}}</td>
+                <td>{{message.recipient}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>First Attempt Main Menu</h1>
+
+
+<p id="demo"></p>
+
+<style>
+div.container {
+    width: 100%;
+    border: 1px solid gray;
+}
+
+header, footer {
+    padding: 0.5em;
+    color: white;
+    background-color: green;
+    clear: left;
+    text-align: center;
+}
+
+nav {
+    float: left;
+    max-width: 160px;
+    margin: 0;
+    padding: 1em;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul a {
+    text-decoration: none;
+}
+
+article {
+    margin-left: 170px;
+    border-left: 1px solid gray;
+    padding: 1em;
+    overflow: hidden;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Main Menu</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="http://localhost:8080/alert">Alerts</a></li>
+            <li><a href="http://localhost:8080/email">Email</a></li>
+            <li><a href="http://localhost:8080/cheekymonkey">RFI</a></li>
+            <li><a href="http://localhost:8080/cheekymonkey">Global Address List</a></li>
+            <li><a href="https://www.linkedin.com/in/laura-mccormick-0ba742125/detail/photo/">World's Worst
+                Programmer</a></li>
+        </ul>
+    </nav>
+
+    <article>
+
+        <form action="/action_page.php">
+
+            <br><br>
+
+            Username: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="username" value="<Enter Username>"
+                                                                  onfocus="if(this.value == '<Enter Username>') {this.value=''}"
+                                                                  onblur="if(this.value == ''){this.value ='<Enter Username>'}">
+            <br>
+
+
+            Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="password"
+                                                                             value="<Enter Password>"
+                                                                             onfocus="if(this.value == '<Enter Password>') {this.value=''}"
+                                                                             onblur="if(this.value == ''){this.value ='<Enter Password>'}">
+            <br>
+
+
+        </form>
+        <p></p>
+
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button
+            type="button"
+            onclick="document.getElementById('demo').innerHTML = Date()">
+        Login
+    </button>
+    </article>
+
+    <footer>Jake Toan's Sweet Work</footer>
+
+</div>
+
+</body>
+</html>

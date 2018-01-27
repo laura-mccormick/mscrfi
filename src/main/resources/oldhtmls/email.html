@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>First Attempt Email</h1>
+
+Hey t
+<p id="demo"></p>
+
+<style>
+div.container {
+    width: 100%;
+    border: 1px solid gray;
+}
+
+header, footer {
+    padding: 0.5em;
+    color: white;
+    background-color: green;
+    clear: left;
+    text-align: center;
+}
+
+nav {
+    float: left;
+    max-width: 160px;
+    margin: 0;
+    padding: 1em;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul a {
+    text-decoration: none;
+}
+
+article {
+    margin-left: 170px;
+    border-left: 1px solid gray;
+    padding: 1em;
+    overflow: hidden;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Emails</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="http://localhost:8080/">Main Menu</a></li>
+            <li><a href="http://localhost:8080/alert">Alerts</a></li>
+            <li><a href="http://localhost:8080/cheekymonkey">RFI</a></li>
+            <li><a href="http://localhost:8080/cheekymonkey">Global Address List</a></li>
+            <li><a href="https://www.linkedin.com/in/laura-mccormick-0ba742125/detail/photo/">World's Worst
+                Programmer</a></li>
+        </ul>
+    </nav>
+
+    <script> type="application/javascript" </script>
+    <article>
+
+        <form action="email/sent/" method="post">
+
+            Send To:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="Sendto" value='<Enter Email Address>'
+                                                          onfocus="if(this.value == '<Enter Email Address>') {this.value=''}"
+                                                          onblur="if(this.value == ''){this.value ='<Enter Email Address>'}">
+            <button type="button" onclick="insertmethod">Lookup</button>
+            <br>
+
+
+            Send From: <input type="text" name="Sendfrom" value="<Enter Email Address>"
+                              onfocus="if(this.value == '<Enter Email Address>') {this.value=''}"
+                              onblur="if(this.value == ''){this.value ='<Enter Email Address>'}"> <br>
+
+
+            Subject:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="Subject" value="<Enter Subject>"
+                                                                onfocus="if(this.value == '<Enter Subject>') {this.value=''}"
+                                                                onblur="if(this.value == ''){this.value ='<Enter Subject>'}">
+            <br>
+
+
+            Message:&nbsp;&nbsp;&nbsp;&nbsp; <textarea rows="4" cols="50" name="Message"
+                                                       onfocus="if(this.value == '<Enter Message>') {this.value=''}"
+                                                       onblur="if(this.value == ''){this.value ='<Enter Message>'}"> Enter Message </textarea>
+
+
+            <p></p>
+            <button type="button"
+                    onclick="document.getElementById('Sendto').innerHTML = Date()">
+                Cancel
+            </button>
+
+            <input type="submit"
+                   value="Send">
+        </form>
+    </article>
+
+    <footer>Jake Toan's Sweet Work</footer>
+
+</div>
+
+</body>
+</html>

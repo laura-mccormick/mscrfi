@@ -1,7 +1,6 @@
 package objects;
 import java.sql.Connection;
 
-
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.DriverManager;
@@ -22,66 +21,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @EnableAutoConfiguration
 public class AlertDAO {
 
-    /*
-     * Constructor, if true is passed in
-     * Autoloads both of the list by calling the appropriate methods
-     * Otherwise, lists are empty.
-     */
-    public AlertDAO(boolean loaded)  {
-        if (loaded == true) {
-            try{
+    public List<AlertDTO> returnFullAlertListDB() throws SQLException {
 
-                alertDtoLoad();
-                convertAlertListToJson();
+        List<AlertDTO> alertList = new ArrayList<>();
 
-            } catch(SQLException sqlExc){
-                sqlExc.getStackTrace();
-            } catch (JsonProcessingException jsonExc) {
-                jsonExc.getStackTrace();
-            }
-
-        } else {}
-
-
-
-    }
-
-    /*
-     * Default constructor
-     */
-    public AlertDAO(){
-
-    }
-
-    // List to store the actual alertDTO objects
-    public static List<AlertDTO> alertList = new ArrayList<AlertDTO>();
-
-    // List to store JSON object versions of the Alert DTOs
-    public static List<String> alertListJson = new ArrayList<String>();
-
-    // Configured jdbcTemplate that comes with connection details set
-    // Set within the beans.xml, this may need work havent live tested.
-    private JdbcTemplate jdbcTemplate = new JdbcTemplate();
-
-    // Object mapper for JSON conversion.
-    private ObjectMapper mapper = new ObjectMapper();
-
-
-    /**
-     * Method that grabs the data from the database
-     * If jdbcTemplate configuration doesn't work, initiates connection manually
-     * Maps the resultset to new DTO objects, loads the list and sets the list.
-     */
-    public List<AlertDTO> alertDtoLoad() throws SQLException {
-
-        alertList.clear();
-
-
-        // Clearly subject to change.
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Dissertation", "TOANDEAF",
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/RFITool", "root",
                 "Waffle12");
         Statement st = connection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM demo.alert");
+        ResultSet rs = st.executeQuery("SELECT * FROM rfiTool.alerts");
 
         while (rs.next()) {
 
@@ -96,92 +43,17 @@ public class AlertDAO {
             alertList.add(new AlertDTO(rs.getString(1), rs.getString(2), hasRfi));
 
         }
-        connection.close();
+
+        st.close();
         return alertList;
 
 
     }
 
+    public List<AlertDTO> returnFullAlertListDummy() throws JsonProcessingException {
 
 
-
-    /**
-     *
-     * Method converts alertList to JSON, stores it in alertListJson
-     */
-    public void convertAlertListToJson() throws JsonProcessingException, SQLException {
-
-        for (int loop = 0; loop < alertList.size(); loop++) {
-            alertListJson.add(new String(mapper.writeValueAsString(alertList.get(loop))));
-        }
-
-    }
-
-    /**
-     * Method converts single particular object to Json, returns it.
-     */
-    public String convertAlertDtoToJson(AlertDTO alertDto) throws JsonProcessingException {
-
-        return new String(mapper.writeValueAsString(alertDto));
-    }
-
-    /*
-     * Method creates new list, populates it with objects from alertList
-     * that match both field and value
-     */
-    public List<AlertDTO> groupByField(String field, String value) throws SQLException, JsonProcessingException {
-
-        List<AlertDTO> groupList = new ArrayList<AlertDTO>();
-
-
-        // Was having issues with ignoring the quote marks within
-        // the json objects, so now using .contains(value) to search
-        // For substring instead - works currently.
-
-        if (field.equalsIgnoreCase("id")) {
-
-            for (int loop = 0; loop < alertList.size(); loop++) {
-                if (alertList.get(loop).getId().contains(value)) {
-                    groupList.add(alertList.get(loop));
-                }
-            }
-
-        }
-
-        if (field.equalsIgnoreCase("desc")) {
-
-            for (int loop = 0; loop < alertList.size(); loop++) {
-                if (alertList.get(loop).getDesc().contains(value)) {
-                    groupList.add(alertList.get(loop));
-                }
-            }
-
-        }
-
-
-
-        // if searching for objects that need attention, value must be either
-        // true or false.
-        if (field.equalsIgnoreCase("hasrfi")) {
-
-            for (int loop = 0; loop < alertList.size(); loop++) {
-                if (value.equalsIgnoreCase("true") && alertList.get(loop).isHasRfi() == true) {
-                    groupList.add(alertList.get(loop));
-                } else if(value.equals("false") && alertList.get(loop).isHasRfi() == false){
-                    groupList.add(alertList.get(loop));
-                }
-            }
-
-        }
-
-
-        return groupList;
-    }
-
-    /**
-     * Method manually populates alertList, just for testing purposes
-     */
-    public void setTestList() throws JsonProcessingException {
+        List<AlertDTO> dummyList = new ArrayList<AlertDTO>();
 
         AlertDTO alert1 = new AlertDTO();
         AlertDTO alert2 = new AlertDTO();
@@ -201,7 +73,7 @@ public class AlertDAO {
         alert7.setId("7");
         alert8.setId("8");
 
-        alert1.setDesc("Big bad");
+        alert1.setDesc("Big cheeky");
         alert2.setDesc("Big small");
         alert3.setDesc("Big dad");
         alert4.setDesc("Mad bad");
@@ -219,14 +91,59 @@ public class AlertDAO {
         alert7.setHasRfi(false);
         alert8.setHasRfi(true);
 
-        alertList.add(alert1);
-        alertList.add(alert2);
-        alertList.add(alert3);
-        alertList.add(alert4);
-        alertList.add(alert5);
-        alertList.add(alert6);
-        alertList.add(alert7);
-        alertList.add(alert8);
+        dummyList.add(alert1);
+        dummyList.add(alert2);
+        dummyList.add(alert3);
+        dummyList.add(alert4);
+        dummyList.add(alert5);
+        dummyList.add(alert6);
+        dummyList.add(alert7);
+        dummyList.add(alert8);
+
+        return dummyList;
+    }
+
+    public AlertDTO returnAlertById(String alertId) throws SQLException {
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/RFITool", "root",
+                "Waffle12");
+        Statement st = connection.createStatement();
+        String sql = String.format("SELECT * FROM rfiTool.alerts WHERE alertId = %s", alertId);
+        ResultSet rs = st.executeQuery(sql);
+
+        boolean hasRfi;
+
+        if(rs.getInt(3) == 1){
+            hasRfi = true;
+        } else {
+            hasRfi = false;
+        }
+
+        AlertDTO alertDto = new AlertDTO(rs.getString(1), rs.getString(2), hasRfi);
+
+        st.close();
+        return alertDto;
+    }
+
+    public void updateAlertHasRFIvalue(String alertId, boolean hasRfi) throws SQLException {
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/RFITool", "root",
+                "Waffle12");
+        Statement st = connection.createStatement();
+
+        int rfiBoolean;
+
+        if(hasRfi){
+            rfiBoolean = 1;
+        } else {
+            rfiBoolean = 0;
+        }
+
+        String sql = String.format("UPDATE rfiTool.alerts SET (hasRfi = '%d') WHERE alertId = '%s';", rfiBoolean, alertId);
+
+        st.executeQuery(sql);
+
+        st.close();
 
     }
 

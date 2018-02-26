@@ -12,7 +12,7 @@
 
                                Need to find a way to pass the {{alertId}} back through in a similar manner.
                                At the minute it's existing only within the session? -->
-                        <form action="sent/">
+                        <form action="sent/" method="post" enctype="multipart/form-data">
 
                             <b>To: </b>   <input type="text" ng-model="recipient1" id="sender1" name="sender1"/><br><br>
 
@@ -23,28 +23,17 @@
                         <!--- Attach File Code --->
 
                             <div class="row">
-                                <label for="fileToUpload">Attach File</label>
-                                <input type="file" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" /> <br><br><br>
-                            </div>
+                                <b>Attach File: </b>
+                                <input class="attachmentButton" id="attachments" name="attachments" type="file" multiple/>
+                                <input type="hidden" id="processedAttachments" name="processedAttachments" value="" />
+                            </div><br>
+                            
+                            <div class="row">
+                                <b>Attach PDF of Alert? </b><input type="checkbox" id="attachPDF" name="attachPDF" />
+                                <input type="hidden" id="generatedPDF" name="generatedPDF" value="" />
+                            </div><br><br>
 
-                            <div ng-show="files.length">
-                                <div ng-repeat="file in files.slice(0)">
-                                    <span>{{file.webkitRelativePath || file.name}}</span>
-                                    (<span ng-switch="file.size > 1024*1024">
-                            <span ng-switch-when="true">{{file.size / 1024 / 1024 | number:2}} MB</span>
-                            <span ng-switch-default>{{file.size / 1024 | number:2}} kB</span>
-                        </span>)
-                                </div>
-                                <input type="button" ng-click="uploadFile()" value="Upload" />
-                                <div ng-show="progressVisible">
-                                    <div class="percent">{{progress}}%</div>
-                                    <div class="progress-bar">
-                                        <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        <textarea class="messageBody" type="text" ng-model="message body" id="messageBodyId" cols=""30 rows="30" name="messageBody"></textarea><br><br><br>
+                        <textarea class="messageBody" type="text" id="messageBodyId" cols=""30 rows="30" name="messageBody"></textarea><br><br><br>
 
 
 

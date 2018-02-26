@@ -1,10 +1,27 @@
-<div ng-controller="messageCtrl">
+<div  ng-controller="viewMessageCtrl" class="soloMessageViewMain">
+	<h3>Viewing Message <i>{{selectedMessage.messageId}}</i> for Alert <i>{{selectedMessage.alertId}}</i></h3>
+	
+	<b>Sender: </b>  {{selectedMessage.sender}}<br>
+	<b>Cc: </b>  <br>
+	<b>Subject: </b>  {{selectedMessage.subject}}<br><br>
+	
+	<div class="messageViewContent">{{selectedMessage.body}}</div><br><br>
 
+	<b>Attachments: </b>
+	<table>
+		<thead>
+		<th>File Name</th>
+		<th>Link</th>
+        <th>Link2</th>
+		</thead>
+		<tbody ng-repeat="file in files">
+		<tr>
+			<td>{{ file.fileName }}</td>
+			<td> <a href="{{file.fileAsFile}}" download="testdaddy.txt"> Download File </a></td>
+            <td> <a href="{{file.fileAsByteArray}}" download="testdaddy.txt"> Download File2 </a></td>
+            <td> <a href="{{file}}" download="testdaddy.txt"> Download File3 </a></td>
+		</tr>
+		</tbody>
+	</table>
 
-    <div><p></p>
-        <h1>Viewing Message: {{messageId}}</h1>
-
-    <p></p>
-
-    </div>
 </div>

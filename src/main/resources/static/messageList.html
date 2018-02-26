@@ -1,0 +1,42 @@
+<div ng-controller="messageListCtrl">
+
+
+    <div>
+        <b>Search for Message: &nbsp; </b>
+        <div class="searchBarInput ">
+            <input class="searchBarInput" type="text" ng-model="term" id="searcher"/><br>
+        </div>
+    </div>
+
+    <div><p></p>
+        <h1>Messages for Conversation: {{conversationId}}</h1>
+        <nav><a id="viewMessageHref" class="greyOut">View Message</a></nav></div>
+
+    <p></p>
+
+    <div ng-show="filtMessages.length<1">There are currently no messages in this conversation.</div>
+
+    <div ng-show="filtMessages.length>0">
+        <table>
+            <thead>
+            <th ng-click="orderByMe('subject')">Subject</th>
+            <th ng-click="orderByMe('sender')">Sender</th>
+            <th ng-click="orderByMe('recipient')">Recipient</th>
+            <th ng-click="orderByMe('body')">Message Preview</th>
+            <th ng-click="orderByMe('timestamp')">Timestamp</th>
+            </thead>
+
+
+            <tbody ng-repeat="message in filtMessages | orderBy:myOrderBy | filter:term" ng-cloak ng-switch
+                   on="isSelMessage(message)" ng-click="selMessage(message,$index)">
+            <tr ng-class="{selected: selId==$index}">
+                <td>{{message.subject}}</td>
+                <td>{{message.sender}}</td>
+                <td>{{message.recipient}}</td>
+                <td>{{message.body}}</td>
+                <td>{{message.timestamp}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

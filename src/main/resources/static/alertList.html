@@ -4,7 +4,7 @@
     <div>
         <b>Search for Alert: &nbsp; </b>
         <div class="searchBarInput ">
-            <input class="searchBarInput" type="text" ng-model="term" id="searcher" /><br>
+            <input class="searchBarInput" type="text" id="searcher" placeholder="Search by alert description..."/><br>
         </div>
     </div>
 
@@ -19,10 +19,10 @@
             <th>Alert Description</th>
             <th>Has RFI?</th>
             </thead>
-            <tbody ng-repeat="alert in alerts | filter:term" ng-cloak ng-switch on="isSelAlert(alert)" ng-click="selAlert(alert,$index)">
+            <tbody ng-repeat="alert in alerts" ng-cloak ng-switch on="isSelAlert(alert)" ng-click="selAlert(alert,$index)">
             <tr ng-class="{selected: selId==$index}">
                 <td>{{alert.id}}</td>
-                <td>{{alert.desc}}</td>
+                <td id>{{alert.desc}}</td>
                 <td>{{alert.hasRfi}}</td>
             </tr>
             </tbody>

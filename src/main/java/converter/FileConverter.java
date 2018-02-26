@@ -1,54 +1,52 @@
 package converter;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+
+import java.io.*;
 
 public class FileConverter {
 
-    public static Map<String, String> run() {
+//    public static void main(String [] args) throws IOException {
+//        File fileRaw = new File("C:\\Users\\jt65062\\Documents\\Disser\\msc_rfi\\BackendTransfer\\src\\main\\resources\\test.txt");
+//        System.out.println(fileToStringConverter(fileRaw));
+//
+//        String fileName = fileRaw.getName();
+//        byte[] test = fileToByteArrayConverter(fileRaw);
+//
+//        File fileTransformed = byteArrayToFile(test, fileName);
+//
+//        System.out.println(fileTransformed.getName());
+//        System.out.println(fileTransformed.getAbsolutePath());
+//        System.out.println(fileTransformed.toString());
+//
+//        String fileContents = fileToStringConverter(fileTransformed);
+//        System.out.println(fileContents.toString());
+//        System.out.println(fileContents);
+//    }
 
-        return filesToStringsToMap(fillFileArray());
-    }
+    public byte[] fileToByteArrayConverter(File file) throws IOException {
 
+        InputStream input = new FileInputStream(file);
 
-    public static Map<String, String> filesToStringsToMap(File[] files){
+        byte[] filesAsBytes = IOUtils.toByteArray(input);
 
-        Map<String, String> map = new HashMap<String, String>();
-
-        for(int loop = 0; loop < files.length; loop++){
-
-            map.put(files[loop].getName(), new String(fileToStringConverter(files[loop])));
-
-        }
-
-        return map;
-
-    }
-
-
-    public static File[] fillFileArray() {
-
-
-        File file1 = new File("BackendTransfer/src/main/resources/laura/alertMain.css");
-        File file2 = new File("BackendTransfer/src/main/resources/laura/alertList.html");
-        File file3 = new File("BackendTransfer/src/main/resources/laura/index.html");
-        File file4 = new File("BackendTransfer/src/main/resources/laura/conversation.html");
-        File file5 = new File("BackendTransfer/src/main/resources/laura/newMessage.html");
-        File file6 = new File("BackendTransfer/src/main/resources/laura/viewMessage.html");
-        File file7 = new File("BackendTransfer/src/main/resources/laura/alert.js");
-
-        File[] files = {file1,file2,file3,file4,file5,file6,file7};
-
-        return files;
-
+        return filesAsBytes;
 
 
     }
 
+    public File byteArrayToFile(byte [] byteArray, String fileName) throws IOException {
+
+        File file = new File(fileName);
+
+        FileUtils.writeByteArrayToFile(file, byteArray);
+
+        return file;
+
+    }
 
     public static String fileToStringConverter(File file) {
 

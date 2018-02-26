@@ -12,6 +12,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.io.File;
+import java.util.List;
 import java.util.Properties;
 
 @Component
@@ -22,27 +24,31 @@ public class EmailSetup {
     @Autowired
     Environment resources;
 
-    public Message sendEmail(String to, String subject, String messageContent)
+    public Message sendEmail(String to, String subject, String messageContent, List<File> files, String conversationId)
             throws MessagingException {
+
         Message message = new MimeMessage(this.getSmtpSessionForSendingMessages());
 
         //message.setFrom(new InternetAddress("jt65062@imceu.eu.ssmb.com"));
-        message.setFrom(new InternetAddress(username));
+        message.setFrom(new InternetAddress("jaketoan@hotmail.co.uk"));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
         message.setSubject(subject);
-        message.setText(messageContent);
 
-        MimeBodyPart messageBodyPart = new MimeBodyPart();
+        String content = messageContent;
+        content += "<div><input type=\"hidden\" name=\"RFINumber\" value=\""+conversationId+"\"></div>";
+        message.setText(content);
 
         Multipart multipart = new MimeMultipart();
 
-        messageBodyPart = new MimeBodyPart();
-        String file = "path of file to be attached";
-        String fileName = "attachmentName";
-        DataSource source = new FileDataSource(file);
-        messageBodyPart.setDataHandler(new DataHandler(source));
-        messageBodyPart.setFileName(fileName);
-        multipart.addBodyPart(messageBodyPart);
+        for(File file : files){
+
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            DataSource source = new FileDataSource(file);
+            messageBodyPart.setDataHandler(new DataHandler(source));
+            messageBodyPart.setFileName(file.getName());
+            multipart.addBodyPart(messageBodyPart);
+
+        }
 
         message.setContent(multipart);
 
@@ -54,25 +60,26 @@ public class EmailSetup {
 
 
     public Session getSmtpSessionForSendingMessages(){
+
         Properties props = new Properties();
-        props.put("mail.smtp.user", username);
-        props.put("mail.smtp.password", resources.getProperty("mail.password"));
 
-        props.put("mail.smtp.host", resources.getProperty("mail.host"));
-        props.put("mail.smtp.port", resources.getProperty("mail.access.port"));
+        props.put("mail.smtp.user", "jaketoan@hotmail.co.uk");
+        props.put("mail.smtp.password", "Jakeemma12");
 
-        props.put("mail.smtp.starttls.enable", resources.getProperty("mail.starttls.enable"));
-        props.put("mail.smtp.auth", resources.getProperty("mail.auth"));
+        props.put("mail.smtp.host", "smtp-mail.outlook.com");
+        props.put("mail.smtp.port", "587");
+
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.auth", "true");
 
         Authenticator auth = new javax.mail.Authenticator() {
 
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(resources.getProperty("mail.username"),resources.getProperty("mail.password"));
+                return new PasswordAuthentication("jaketoan@hotmail.co.uk", "Jakeemma12");
             }
         };
 
         return Session.getInstance(props, auth);
 
     }
-
 }

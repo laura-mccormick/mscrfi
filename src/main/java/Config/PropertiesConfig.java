@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@PropertySource("application.properties")
+@PropertySource("resources/application.properties")
 public class PropertiesConfig {
 
     @Value("${jdbc.url}")

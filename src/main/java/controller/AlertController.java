@@ -19,58 +19,47 @@ import java.util.List;
 @RequestMapping(value = "/alert")
 public class AlertController {
 
-    static AlertDAO ad = new AlertDAO(false);
-    /**
-     * Will not work until DB gets sorted
-     * Method loads both the object and JSON lists
-     */
-    @RequestMapping("/listLoad")
-    @ResponseBody
-    public void listLoader() throws SQLException, JsonProcessingException {
-
-        ad.alertDtoLoad();
-        ad.convertAlertListToJson();
-
-    }
+    private static AlertDAO dao = new AlertDAO();
 
     /**
      * Will not work until DB gets sorted
      * Method clears the object list, populates it again then returns it
      */
-    @RequestMapping("/fullListActual")
+    @RequestMapping("/fullListAlertsDB")
     @ResponseBody
-    public List<AlertDTO> refreshDTOList() throws SQLException, JsonProcessingException {
-        AlertDAO.alertList.clear();
-        ad.alertDtoLoad();
-        return AlertDAO.alertList;
+    public List<AlertDTO> returnFullAlertsDummy() throws SQLException, JsonProcessingException {
+
+        return dao.returnFullAlertListDB();
+
     }
 
 
     /**
      * Refreshes the list with test data whilst DB is down
      */
-    @RequestMapping("/fullListDummy")
+    @RequestMapping("/fullListAlertsDummy")
     @ResponseBody
-    public static List<AlertDTO> listObjectTest() throws JsonProcessingException {
-        AlertDAO.alertList.clear();
-        ad.setTestList();
-        AlertDAO.alertList.add(new AlertDTO("69", "this is seriously working?", false));
-        AlertDAO.alertList.add(new AlertDTO("33", "Big fan big man", false));
-        return AlertDAO.alertList;
-    }
+    public static List<AlertDTO> returnFullListAlertsDummy() throws JsonProcessingException {
 
+        return dao.returnFullAlertListDummy();
+    }
 
     /**
-     * Method searches by the field first, then the value of the field.
-     * Can search by any of the attributes of the DTO, except blob atm, functionality required
-     * "Attention" is boolean, so searching searchBy/attention/true will return
-     * All objects/alerts with an attachment
+     * Refreshes the list with test data whilst DB is down
      */
-    @RequestMapping(value = "/searchby/{field}/{value}", method = RequestMethod.GET)
+    @RequestMapping("/getAlertById/{id}")
     @ResponseBody
-    public List<AlertDTO> searchByReturnTest(@PathVariable("field") String field, @PathVariable("value") String value)
-            throws JsonProcessingException, SQLException {
+    public static AlertDTO getAlertById(@PathVariable("id") String id) throws JsonProcessingException, SQLException {
 
-        return ad.groupByField(field, value);
+        return dao.returnAlertById(id);
     }
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public String test() throws SQLException, JsonProcessingException {
+
+        return "hey dad";
+
+    }
+
 }

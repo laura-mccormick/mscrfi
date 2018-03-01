@@ -1,0 +1,149 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema UNORFI
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `UNORFI` DEFAULT CHARACTER SET latin1 ;
+USE `unoRfi` ;
+
+-- -----------------------------------------------------
+-- Table `UNORFI`.`User`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `UNORFI`.`User` (
+  `SOIED` VARCHAR(8) NOT NULL,
+  `usergroupId` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (SOIED, usergroupId))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `UNORFI`.`Usergroup`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `UNORFI`.`Usergroup` (
+  `usergroupId` VARCHAR(50) NOT NULL,
+  `product` VARCHAR(45) NULL DEFAULT NULL,
+  `region` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`usergroupId`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `UNORFI`.`Templates`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `UNORFI`.`Template` (
+  `tempId` VARCHAR(45) NOT NULL,
+  `tempTitle` VARCHAR(45) NOT NULL,
+  `tempFields` VARCHAR(45) NULL DEFAULT NULL,
+  `tempAuthor` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`tempId`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `UNORFI`.`Action`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `UNORFI`.`Action` (
+  `actionId` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`actionId`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+-- -----------------------------------------------------
+-- Table `UNORFI`.`UsergroupAction`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `UNORFI`.`UsergroupAction` (
+  `actionID` VARCHAR(45) NOT NULL,
+  `usergroupId` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (actionId, usergroupId))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `UNORFI`.`Alert`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `UNORFI`.`Alert` (
+  `alertId` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(45) NULL DEFAULT NULL,
+  `hasRfi` BIT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`alertId`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+-- -----------------------------------------------------
+-- Table `UNORFI`.`Conversation`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `UNORFI`.`Conversation` (
+  `conversationId` VARCHAR(45) NOT NULL,
+  `alertId` VARCHAR(45) NOT NULL,
+  `subject` VARCHAR (45) NULL DEFAULT NULL,
+  `openClosed` BIT NOT NULL DEFAULT 0,
+  `readUnread` BIT NOT NULL DEFAULT 0,
+  `dateOpened` TIMESTAMP NOT NULL,
+  `lastUpdated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`alertId`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+-- -----------------------------------------------------
+-- Table `UNORFI`.`Message`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `UNORFI`.`Message` (
+  `messageId` VARCHAR(45) NOT NULL,
+  `conversationId` VARCHAR(45) NOT NULL,
+  `subject` VARCHAR(200) NULL DEFAULT NULL,
+  `sender` VARCHAR(100) NOT NULL,
+  `singleBody` NVARCHAR (2000),
+  `threadBody` NVARCHAR (5000),
+  PRIMARY KEY (`messageId`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+-- -----------------------------------------------------
+-- Table `UNORFI`.`MessageRecipient`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `UNORFI`.`MessageRecipient` (
+  `messageId` VARCHAR(45) NOT NULL,
+  `recipientId` VARCHAR(45) NOT NULL,
+  `type` ENUM ('TO', 'CC', 'BCC') NOT NULL,
+  PRIMARY KEY (messageId, recipientId))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+-- -----------------------------------------------------
+-- Table `UNORFI`.`Recipient`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `UNORFI`.`Recipient` (
+  `recipientId` int NOT NULL auto_increment,
+  `emailAddress` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`recipientId`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+-- -----------------------------------------------------
+-- Table `UNORFI`.`Attachment`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `UNORFI`.`Attachment` (
+  `attachmentId` int NOT NULL auto_increment,
+  `messageId` VARCHAR(45) NOT NULL,
+  `fileName` VARCHAR(45) NULL DEFAULT NULL,
+  `attachmentBlob` BLOB,
+  PRIMARY KEY (`attachmentId`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
